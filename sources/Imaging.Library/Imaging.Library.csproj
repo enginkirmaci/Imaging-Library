@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E0AFFF7A-47B5-4BAC-8FC4-954302C08624}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Imaging.Library</RootNamespace>
+    <AssemblyName>Imaging.Library</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Blob.cs" />
+    <Compile Include="Comparers\BlobsSorter.cs" />
+    <Compile Include="Constants\ConvolutionMatrices.cs" />
+    <Compile Include="Entities\ConvolutionMatrix.cs" />
+    <Compile Include="Entities\EdgePoints.cs" />
+    <Compile Include="Entities\HoughLine.cs" />
+    <Compile Include="Filters\BasicFilters\ColorPalletteFilter.cs" />
+    <Compile Include="Filters\BasicFilters\HistogramFilter.cs" />
+    <Compile Include="Filters\BasicFilters\LineDrawFilter.cs" />
+    <Compile Include="Filters\BasicFilters\OtsuThresholdFilter.cs" />
+    <Compile Include="Filters\BasicFilters\PixelInterpolation.cs" />
+    <Compile Include="Filters\ComplexFilters\BlobCounter.cs" />
+    <Compile Include="Filters\ComplexFilters\CannyEdgeDetector.cs" />
+    <Compile Include="Filters\ComplexFilters\ConvolutionFilter.cs" />
+    <Compile Include="Filters\ComplexFilters\HoughLineTransformation.cs" />
+    <Compile Include="Filters\ComplexFilters\QuadrilateralTransformation.cs" />
+    <Compile Include="Filters\ComplexFilters\SobelEdgeDetector.cs" />
+    <Compile Include="Filters\FilterBase.cs" />
+    <Compile Include="Entities\PixelMap.cs" />
+    <Compile Include="ImagingManager.cs" />
+    <Compile Include="Entities\Line.cs" />
+    <Compile Include="Entities\Pixel.cs" />
+    <Compile Include="Entities\Point.cs" />
+    <Compile Include="Entities\Rectangle.cs" />
+    <Compile Include="Entities\Size.cs" />
+    <Compile Include="Enums\ObjectsOrder.cs" />
+    <Compile Include="Enums\ShapeType.cs" />
+    <Compile Include="Extensions\LineExtension.cs" />
+    <Compile Include="Extensions\PointExtension.cs" />
+    <Compile Include="Filters\BasicFilters\ThresholdFilter.cs" />
+    <Compile Include="Interfaces\IBlobsFilter.cs" />
+    <Compile Include="Maths\ConvexHull.cs" />
+    <Compile Include="Maths\FlatAnglesOptimizer.cs" />
+    <Compile Include="Maths\GeometryTools.cs" />
+    <Compile Include="Maths\PointsCloud.cs" />
+    <Compile Include="Maths\SimpleShapeChecker.cs" />
+    <Compile Include="Maths\DimensionConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationCore.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationFramework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
