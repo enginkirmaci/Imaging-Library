@@ -15,6 +15,16 @@ namespace Imaging.Library
 
         public List<FilterBase> Filters { get; set; }
 
+        internal PixelMap Input
+        {
+            get
+            {
+                var first = Filters.FirstOrDefault();
+
+                return first == null ? new PixelMap(Original) : first.Source;
+            }
+        }
+
         public PixelMap Output => Filters.Count == 0 ? Original : Filters.Last().Source;
 
         public PixelMap Original { get; }
@@ -30,21 +40,18 @@ namespace Imaging.Library
 
         public void AddFilter(FilterBase filter)
         {
+            filter.Source = Input;
             Filters.Add(filter);
         }
 
         public void Render()
         {
-            if (Filters.Count > 0)
-            {
-                var input = new PixelMap(Original);
-
-                foreach (var filter in Filters)
+            foreach (var filter in Filters)
+                if (!filter.IsApplied)
                 {
-                    filter.Source = input;
+                    filter.IsApplied = true;
                     filter.OnProcess();
                 }
-            }
         }
 
         public bool CanUndo()
@@ -55,7 +62,16 @@ namespace Imaging.Library
         public void Undo()
         {
             if (Filters.Count != 0)
+            {
                 Filters.RemoveAt(Filters.Count - 1);
+                var source = new PixelMap(Original);
+
+                foreach (var filter in Filters)
+                {
+                    filter.IsApplied = false;
+                    filter.Source = source;
+                }
+            }
         }
 
         public void UndoAll()

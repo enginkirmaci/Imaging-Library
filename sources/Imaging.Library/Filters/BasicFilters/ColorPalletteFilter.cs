@@ -18,7 +18,7 @@ namespace Imaging.Library.Filters.BasicFilters
             {
                 for (var y = 0; y < Source.Height; y++)
                 {
-                    var c = Source.Map[x, y];
+                    var c = Source.Map[y][x];
 
                     double dblInputRed = c.R;
                     double dblInputGreen = c.G;
@@ -50,7 +50,7 @@ namespace Imaging.Library.Filters.BasicFilters
                         }
                     }
 
-                    Source.Map[x, y] = c;
+                    Source.Map[y][x] = c;
                 }
             }
         }

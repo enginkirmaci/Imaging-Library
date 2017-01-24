@@ -41,13 +41,8 @@ namespace Imaging.Library.Filters.ComplexFilters
             int i, j;
 
             for (i = 0; i < Height; i++)
-            {
                 for (j = 0; j < Width; j++)
-                {
-                    var pixel = Source.Map[j, i];
-                    GreyImage[j, i] = (int)((pixel.R + pixel.G + pixel.B) / 3.0);
-                }
-            }
+                    GreyImage[j, i] = Source.Map[i][j].Gray;
 
             Gradient = new float[Width, Height];
             NonMax = new float[Width, Height];
@@ -187,10 +182,10 @@ namespace Imaging.Library.Filters.ComplexFilters
 
             var black = new Pixel(255, 0, 0, 0);
 
-            for (i = 0; i <= (Width - 1); i++)
-                for (j = 0; j <= (Height - 1); j++)
+            for (j = 0; j <= (Height - 1); j++)
+                for (i = 0; i <= (Width - 1); i++)
                 {
-                    Source.Map[i, j] = EdgeMap[i, j] == 1 ? white : black;
+                    Source.Map[j][i] = EdgeMap[i, j] == 1 ? white : black;
                 }
 
             return;

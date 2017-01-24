@@ -21,12 +21,12 @@ namespace Imaging.Library.Filters.ComplexFilters
 
             int limit = 128 * 128;
 
-            for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
             {
-                for (int j = 0; j < height; j++)
+                for (int i = 0; i < width; i++)
                 {
                     //  var color = ToColor(sourcePixelRegion.ImagePixels[DimensionConverter.To1D(i, j, width)]);
-                    allPixR[i, j] = Source.Map[i, j].R;
+                    allPixR[i, j] = Source.Map[j][i].R;
                     //allPixG[i, j] = color.G;
                     //allPixB[i, j] = color.B;
                 }
@@ -36,9 +36,9 @@ namespace Imaging.Library.Filters.ComplexFilters
             int new_gx = 0, new_gy = 0;
             int new_bx = 0, new_by = 0;
             int rc, gc, bc;
-            for (int i = 1; i < width - 1; i++)
+            for (int j = 1; j < height - 1; j++)
             {
-                for (int j = 1; j < height - 1; j++)
+                for (int i = 1; i < width - 1; i++)
                 {
                     new_rx = 0;
                     new_ry = 0;
@@ -68,9 +68,9 @@ namespace Imaging.Library.Filters.ComplexFilters
                         }
                     }
                     if (new_rx * new_rx + new_ry * new_ry > limit || new_gx * new_gx + new_gy * new_gy > limit || new_bx * new_bx + new_by * new_by > limit)
-                        Source.Map[i, j] = white;
+                        Source.Map[j][i] = white;
                     else
-                        Source.Map[i, j] = black;
+                        Source.Map[j][i] = black;
                 }
             }
         }

@@ -15,11 +15,11 @@
 
         public override void OnProcess()
         {
-            for (var x = 0; x < Source.Width; x++)
+            for (var y = 0; y < Source.Height; y++)
             {
-                for (var y = 0; y < Source.Height; y++)
+                for (var x = 0; x < Source.Width; x++)
                 {
-                    var pixel = Source.Map[x, y];
+                    var pixel = Source.Map[y][x];
 
                     if (pixel.R < _thresholdR)
                         pixel.R = 0;
@@ -30,7 +30,7 @@
                     if (pixel.B < _thresholdB)
                         pixel.B = 0;
 
-                    Source.Map[x, y] = pixel;
+                    Source.Map[y][x] = pixel;
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace Imaging.Library.Filters.ComplexFilters
                     {
                         for (filterx = 0; filterx < _matrix.Size; filterx++)
                         {
-                            var tempPix = Source.Map[x + filterx - s, y + filtery - s];
+                            var tempPix = Source.Map[y + filtery - s][x + filterx - s];
 
                             r += _matrix.Matrix[filtery, filterx] * tempPix.R;
                             g += _matrix.Matrix[filtery, filterx] * tempPix.G;
@@ -49,7 +49,7 @@ namespace Imaging.Library.Filters.ComplexFilters
                     g = Math.Min(Math.Max((g / _matrix.Factor) + _matrix.Offset, 0), 255);
                     b = Math.Min(Math.Max((b / _matrix.Factor) + _matrix.Offset, 0), 255);
 
-                    Source.Map[x, y] = new Pixel(255, (byte)r, (byte)g, (byte)b);
+                    Source.Map[y][x] = new Pixel(255, (byte)r, (byte)g, (byte)b);
                 }
             }
         }

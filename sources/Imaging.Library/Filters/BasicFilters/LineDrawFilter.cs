@@ -35,7 +35,7 @@ namespace Imaging.Library.Filters.BasicFilters
                 yf = (int)y;
                 try
                 {
-                    Source.Map[xf, yf] = Pixel;
+                    Source.Map[yf][xf] = Pixel;
                 }
                 catch (InvalidOperationException)
                 {

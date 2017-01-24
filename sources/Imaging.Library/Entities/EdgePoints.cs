@@ -103,35 +103,34 @@ namespace Imaging.Library.Entities
 
         public Size EstimatedRectangleSize()
         {
-            ////Method 1
-            //var result = new Size();
-            //double heightLeft, heightRight, widthTop, widthBottom;
+            //Method 1
+            var heightLeft = Math.Abs(BottomLeft.Y - TopLeft.Y);
+            var heightRight = Math.Abs(BottomRight.Y - TopRight.Y);
 
-            //heightLeft = Math.Abs(BottomLeft.Y - TopLeft.Y);
-            //heightRight = Math.Abs(BottomRight.Y - TopRight.Y);
+            var widthTop = Math.Abs(TopRight.X - TopLeft.X);
+            var widthBottom = Math.Abs(BottomRight.X - BottomLeft.X);
 
-            //widthTop = Math.Abs(TopRight.X - TopLeft.X);
-            //widthBottom = Math.Abs(BottomRight.X - BottomLeft.X);
-
-            //if (heightLeft < heightRight)
-            //    result.Height = (int)heightLeft;
-            //else
-            //    result.Height = (int)heightRight;
-
-            //if (widthTop < widthBottom)
-            //    result.Width = (int)widthTop;
-            //else
-            //    result.Width = (int)widthBottom;
-
-            //Method 2
-            var newWidth = (int)Math.Max(TopLeft.DistanceTo(TopRight), BottomLeft.DistanceTo(BottomRight));
-            var newHeight = (int)Math.Max(TopLeft.DistanceTo(BottomLeft), TopRight.DistanceTo(BottomRight));
-
-            return new Size
+            return new Size()
             {
-                Width = newWidth,
-                Height = newHeight
+                Width = (int)Math.Min(widthTop, widthBottom),
+                Height = (int)Math.Min(heightRight, heightLeft)
             };
+
+            //return new Size()
+            //{
+            //    Width = (int)((widthTop + widthBottom) / 2),
+            //    Height = (int)((heightLeft + heightRight) / 2)
+            //};
+
+            ////Method 2
+            //var newWidth = (int)Math.Max(TopLeft.DistanceTo(TopRight), BottomLeft.DistanceTo(BottomRight));
+            //var newHeight = (int)Math.Max(TopLeft.DistanceTo(BottomLeft), TopRight.DistanceTo(BottomRight));
+
+            //return new Size
+            //{
+            //    Width = newWidth,
+            //    Height = newHeight
+            //};
         }
     }
 }

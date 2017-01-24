@@ -14,7 +14,7 @@ namespace Imaging.Library.Entities
         /// </summary>
         public int Height;
 
-        public Pixel[,] Map;
+        public Pixel[][] Map;
 
         /// <summary>
         ///     The width of the PixelMap in pixels.
@@ -30,7 +30,11 @@ namespace Imaging.Library.Entities
             Height = height;
             DpiX = dpiX;
             DpiY = dpiY;
-            Map = new Pixel[Width, Height];
+            Map = new Pixel[Height][];
+
+            for (int i = 0; i < Height; i++)
+                Map[i] = new Pixel[Width];
+
             Bpp = bpp;
         }
 
@@ -43,14 +47,37 @@ namespace Imaging.Library.Entities
             Height = original.Height;
             DpiX = original.DpiX;
             DpiY = original.DpiY;
-            Map = new Pixel[Width, Height];
+            Map = new Pixel[Height][];
+
+            for (int i = 0; i < Height; i++)
+                Map[i] = new Pixel[Width];
+
             Bpp = original.Bpp;
 
-            Array.Copy(original.Map, Map, original.Map.Length);
+            //Array.Copy(original.Map, Map, original.Map.Length);
+
+            Map = CopyArrayBuiltIn(original.Map);
 
             //for (var x = 0; x < Width; x++)
             //    for (var y = 0; y < Height; y++)
             //        this[x, y] = original[x, y];
+        }
+
+        private static Pixel[][] CopyArrayBuiltIn(Pixel[][] source)
+        {
+            var len = source.Length;
+            var dest = new Pixel[len][];
+
+            for (var x = 0; x < len; x++)
+            {
+                var inner = source[x];
+                var ilen = inner.Length;
+                var newer = new Pixel[ilen];
+                Array.Copy(inner, newer, ilen);
+                dest[x] = newer;
+            }
+
+            return dest;
         }
 
         /// <summary>
@@ -60,14 +87,11 @@ namespace Imaging.Library.Entities
         {
             get
             {
-                if (Inside(new Point(x, y)))
-                    return Map[x, y];
-                return Map[Math.Max(Math.Min(x, Width - 1), 0), Math.Max(Math.Min(y, Height - 1), 0)];
+                return Map[y][x];
             }
             set
             {
-                if (Inside(new Point(x, y)))
-                    Map[x, y] = value;
+                Map[y][x] = value;
             }
         }
 

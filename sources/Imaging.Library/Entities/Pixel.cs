@@ -229,6 +229,11 @@ namespace Imaging.Library.Entities
             get { return (byte)Math.Sqrt(0.299 * R * R + 0.587 * G * G + 0.114 * B * B); }
         }
 
+        public byte Gray
+        {
+            get { return (byte)((R + G + B) / 3.0); }
+        }
+
         public uint ToUInt()
         {
             return (uint)((A << 24) | (R << 16) | (G << 8) | (B << 0));

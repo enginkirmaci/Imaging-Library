@@ -576,7 +576,7 @@ namespace Imaging.Library.Filters.ComplexFilters
             // 1 - for pixels of the first row
             //Color firstColor = ToColor(sourcePixelRegion.ImagePixels[pos]);
 
-            var firstPixel = Source.Map[DimensionConverter.X(pos, imageWidth), DimensionConverter.Y(pos, imageWidth)];
+            var firstPixel = Source.Map[DimensionConverter.Y(pos, imageWidth)][DimensionConverter.X(pos, imageWidth)];
 
             if ((firstPixel.R | firstPixel.G | firstPixel.B) != 0)
             {
@@ -587,14 +587,14 @@ namespace Imaging.Library.Filters.ComplexFilters
 
             for (int x = 1; x < imageWidth; x++, pos += pixelSize, p++)
             {
-                var pixel = Source.Map[DimensionConverter.X(pos, imageWidth), DimensionConverter.Y(pos, imageWidth)];
+                var pixel = Source.Map[DimensionConverter.Y(pos, imageWidth)][DimensionConverter.X(pos, imageWidth)];
 
                 // check if we need to label current pixel
                 if ((pixel.R > backgroundThresholdR) ||
                      (pixel.G > backgroundThresholdG) ||
                      (pixel.B > backgroundThresholdB))
                 {
-                    var prevPixel = Source.Map[DimensionConverter.X(pos - 1, imageWidth), DimensionConverter.Y(pos - 1, imageWidth)];
+                    var prevPixel = Source.Map[DimensionConverter.Y(pos - 1, imageWidth)][DimensionConverter.X(pos - 1, imageWidth)];
                     // check if the previous pixel already was labeled
                     if ((prevPixel.R > backgroundThresholdR) ||
                          (prevPixel.G > backgroundThresholdG) ||
@@ -615,15 +615,15 @@ namespace Imaging.Library.Filters.ComplexFilters
             // for each row
             for (int y = 1; y < imageHeight; y++)
             {
-                var rowFirstPixel = Source.Map[DimensionConverter.X(pos, imageWidth), DimensionConverter.Y(pos, imageWidth)];
+                var rowFirstPixel = Source.Map[DimensionConverter.Y(pos, imageWidth)][DimensionConverter.X(pos, imageWidth)];
                 // for the first pixel of the row, we need to check
                 // only upper and upper-right pixels
                 if ((rowFirstPixel.R > backgroundThresholdR) ||
                         (rowFirstPixel.G > backgroundThresholdG) ||
                         (rowFirstPixel.B > backgroundThresholdB))
                 {
-                    var abovePixel = Source.Map[DimensionConverter.X(pos - stride, imageWidth), DimensionConverter.Y(pos - stride, imageWidth)];
-                    var aboveRightPixel = Source.Map[DimensionConverter.X(pos - strideM1, imageWidth), DimensionConverter.Y(pos - strideM1, imageWidth)];
+                    var abovePixel = Source.Map[DimensionConverter.Y(pos - stride, imageWidth)][DimensionConverter.X(pos - stride, imageWidth)];
+                    var aboveRightPixel = Source.Map[DimensionConverter.Y(pos - strideM1, imageWidth)][DimensionConverter.X(pos - strideM1, imageWidth)];
                     // check surrounding pixels
                     if ((abovePixel.R > backgroundThresholdR) ||
                          (abovePixel.G > backgroundThresholdG) ||
@@ -651,15 +651,15 @@ namespace Imaging.Library.Filters.ComplexFilters
                 // check left pixel and three upper pixels for the rest of pixels
                 for (int x = 1; x < imageWidth - 1; x++, pos += pixelSize, p++)
                 {
-                    var pixel = Source.Map[DimensionConverter.X(pos, imageWidth), DimensionConverter.Y(pos, imageWidth)];
+                    var pixel = Source.Map[DimensionConverter.Y(pos, imageWidth)][DimensionConverter.X(pos, imageWidth)];
                     if ((pixel.R > backgroundThresholdR) ||
                          (pixel.G > backgroundThresholdG) ||
                          (pixel.B > backgroundThresholdB))
                     {
-                        var leftColor = Source.Map[DimensionConverter.X(pos - pixelSize, imageWidth), DimensionConverter.Y(pos - pixelSize, imageWidth)];
-                        var aboveLeftColor = Source.Map[DimensionConverter.X(pos - strideP1, imageWidth), DimensionConverter.Y(pos - strideP1, imageWidth)];
-                        var aboveColor = Source.Map[DimensionConverter.X(pos - stride, imageWidth), DimensionConverter.Y(pos - stride, imageWidth)];
-                        var aboveRightColor = Source.Map[DimensionConverter.X(pos - strideM1, imageWidth), DimensionConverter.Y(pos - strideM1, imageWidth)];
+                        var leftColor = Source.Map[DimensionConverter.Y(pos - pixelSize, imageWidth)][DimensionConverter.X(pos - pixelSize, imageWidth)];
+                        var aboveLeftColor = Source.Map[DimensionConverter.Y(pos - strideP1, imageWidth)][DimensionConverter.X(pos - strideP1, imageWidth)];
+                        var aboveColor = Source.Map[DimensionConverter.Y(pos - stride, imageWidth)][DimensionConverter.X(pos - stride, imageWidth)];
+                        var aboveRightColor = Source.Map[DimensionConverter.Y(pos - strideM1, imageWidth)][DimensionConverter.X(pos - strideM1, imageWidth)];
 
                         // check surrounding pixels
                         if ((leftColor.R > backgroundThresholdR) ||
@@ -747,14 +747,14 @@ namespace Imaging.Library.Filters.ComplexFilters
 
                 // for the last pixel of the row, we need to check
                 // only upper and upper-left pixels
-                var upperColor = Source.Map[DimensionConverter.X(pos, imageWidth), DimensionConverter.Y(pos, imageWidth)];
+                var upperColor = Source.Map[DimensionConverter.Y(pos, imageWidth)][DimensionConverter.X(pos, imageWidth)];
                 if ((upperColor.R > backgroundThresholdR) ||
                      (upperColor.G > backgroundThresholdG) ||
                      (upperColor.B > backgroundThresholdB))
                 {
-                    var upperLeftColor = Source.Map[DimensionConverter.X(pos - pixelSize, imageWidth), DimensionConverter.Y(pos - pixelSize, imageWidth)];
-                    var aboveLeftColor = Source.Map[DimensionConverter.X(pos - strideP1, imageWidth), DimensionConverter.Y(pos - strideP1, imageWidth)];
-                    var aboveColor = Source.Map[DimensionConverter.X(pos - stride, imageWidth), DimensionConverter.Y(pos - stride, imageWidth)];
+                    var upperLeftColor = Source.Map[DimensionConverter.Y(pos - pixelSize, imageWidth)][DimensionConverter.X(pos - pixelSize, imageWidth)];
+                    var aboveLeftColor = Source.Map[DimensionConverter.Y(pos - strideP1, imageWidth)][DimensionConverter.X(pos - strideP1, imageWidth)];
+                    var aboveColor = Source.Map[DimensionConverter.Y(pos - stride, imageWidth)][DimensionConverter.X(pos - stride, imageWidth)];
                     // check surrounding pixels
                     if ((upperLeftColor.R > backgroundThresholdR) ||
                          (upperLeftColor.G > backgroundThresholdG) ||
@@ -884,7 +884,7 @@ namespace Imaging.Library.Filters.ComplexFilters
                     xc[label] += x;
                     yc[label] += y;
 
-                    var c = Source.Map[x, y];
+                    var c = Source.Map[y][x];
                     r = c.R;
                     g = c.G;
                     b = c.B;

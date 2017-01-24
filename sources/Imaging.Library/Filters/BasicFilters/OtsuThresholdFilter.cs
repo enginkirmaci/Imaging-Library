@@ -9,11 +9,11 @@
             float[] vet = new float[256];
             int[] hist = new int[256];
 
-            for (int x = 0; x < Source.Width; x += 3)
+            for (int y = 0; y < Source.Height; y++)
             {
-                for (int y = 0; y < Source.Height; y++)
+                for (int x = 0; x < Source.Width; x += 3)
                 {
-                    hist[Source.Map[x, y].Luminance]++;
+                    hist[Source.Map[y][x].Luminance]++;
                 }
             }
 
@@ -34,18 +34,18 @@
 
             Threshold = (byte)findMax(vet, 256);
 
-            for (int x = 0; x < Source.Width; x++)
+            for (int y = 0; y < Source.Height; y++)
             {
-                for (int y = 0; y < Source.Height; y++)
+                for (int x = 0; x < Source.Width; x++)
                 {
-                    var pixel = Source.Map[x, y];
+                    var pixel = Source.Map[y][x];
 
                     if (pixel.Luminance < Threshold)
                         pixel.B = pixel.G = pixel.R = 0;
                     else
                         pixel.B = pixel.G = pixel.R = 255;
 
-                    Source.Map[x, y] = pixel;
+                    Source.Map[y][x] = pixel;
                 }
             }
         }

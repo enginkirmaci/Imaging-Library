@@ -152,7 +152,7 @@ namespace Imaging.Library.Filters.ComplexFilters
 
                         if ((xs >= 0) && (ys >= 0) && (xs < srcWidth) && (ys < srcHeight))
                         {
-                            Source.Map[x, y] = Source.Map[(int)xs, (int)ys];
+                            Source.Map[y][x] = Source.Map[(int)ys][(int)xs];
                         }
                     }
                 }
@@ -175,17 +175,17 @@ namespace Imaging.Library.Filters.ComplexFilters
                             dy1 = ys - sy1;
                             dy2 = 1.0 - dy1;
 
-                            p1 = Source.Map[(int)sx1, (int)sy1];
-                            p2 = Source.Map[(int)sx2, (int)sy1];
-                            p3 = Source.Map[(int)sx1, (int)sy2];
-                            p4 = Source.Map[(int)sx2, (int)sy2];
+                            p1 = Source.Map[(int)sy1][(int)sx1];
+                            p2 = Source.Map[(int)sy1][(int)sx2];
+                            p3 = Source.Map[(int)sy2][(int)sx1];
+                            p4 = Source.Map[(int)sy2][(int)sx2];
 
                             A = (byte)(dy2 * (dx2 * (p1.A) + dx1 * (p2.A)) + (dy1 * (dx2 * (p3.A) + dx1 * (p4.A))));
                             R = (byte)(dy2 * (dx2 * (p1.R) + dx1 * (p2.R)) + (dy1 * (dx2 * (p3.R) + dx1 * (p4.R))));
                             G = (byte)(dy2 * (dx2 * (p1.G) + dx1 * (p2.G)) + (dy1 * (dx2 * (p3.G) + dx1 * (p4.G))));
                             B = (byte)(dy2 * (dx2 * (p1.B) + dx1 * (p2.B)) + (dy1 * (dx2 * (p3.B) + dx1 * (p4.B))));
 
-                            Source.Map[x, y] = new Pixel(A, R, G, B);
+                            Source.Map[y][x] = new Pixel(A, R, G, B);
                         }
                     }
                 }
