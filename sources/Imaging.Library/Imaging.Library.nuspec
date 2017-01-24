@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Imaging.Library</id>
+    <version>1.0.0</version>
+    <title>PCL Imaging Library for Document Scanning</title>
+    <authors>Engin KIRMACI</authors>
+    <owners>Engin KIRMACI</owners>
+    <!--<licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>-->
+    <projectUrl>https://github.com/enginkirmaci/Imaging-Library</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      PCL Imaging Library for Document Scanning, contains Canny edge detection, Blob counter, quadrilateral transformation and many more.
+      Check samples in github.
+      This package is compatible with the following .net platforms: net46+uwp10+dnxcore50
+    </description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Imaging Canny Blob Quadrilateral Document Scan Houghline Sobel Bicubic Otsu Threshold</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\Imaging.Library.dll" target="lib" />
+  </files>
+</package>

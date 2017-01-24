@@ -33,17 +33,4 @@ Global
 		{6293D115-4619-4E28-9C78-7AF848526F91} = {75931991-493F-47C4-8205-352349F2F0A3}
 		{75931991-493F-47C4-8205-352349F2F0A3} = {2D70E54D-D083-4078-A04C-AB5C1CDBDD5E}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://enginkirmaci.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Imaging.Library\\Imaging.Library.csproj
-		SccProjectName1 = Imaging.Library
-		SccLocalPath1 = Imaging.Library
-		SccProjectUniqueName2 = ..\\samples\\Wpf\\EdgeDetection\\EdgeDetection.csproj
-		SccProjectTopLevelParentUniqueName2 = Imaging.Library.sln
-		SccProjectName2 = ../samples/Wpf/EdgeDetection
-		SccLocalPath2 = ..\\samples\\Wpf\\EdgeDetection
-	EndGlobalSection
 EndGlobal
