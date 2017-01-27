@@ -1,6 +1,10 @@
 # Imaging Library
 PCL Imaging Library especially designed for document scanning like Office Lens and Camscanner. It contains some filters to achieve this. (Canny edge detection, Blob counter, quadrilateral transformation, etc..) 
 
+# Supporting Platforms
+Compatible .net platforms: net46 + uwp10 + dnxcore50
+
+#Code Sample
 ```csharp
     var imaging = new ImagingManager(source);       //source is PixelMap, you can find samples how to convert image to PixelMap
     imaging.AddFilter(new BicubicFilter(scale));    //Downscaling
@@ -39,11 +43,13 @@ PCL Imaging Library especially designed for document scanning like Office Lens a
     
     //imaging.Output gives that extracted rectangle shape from photo. Check out WPF sample how to save it.
 ```
-![alt source](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg)
-![alt output](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg)
+#Sample Scanning
+
+|Original|Output|
+|-----------|-----------|
+|![alt source](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg)|![alt output](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg)|
 
 
-Compatible .net platforms: net46 + uwp10 + dnxcore50
 # Nuget Package
 Install-Package Imaging.Library
 https://www.nuget.org/packages/Imaging.Library/1.0.0
