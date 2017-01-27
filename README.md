@@ -4,6 +4,10 @@ PCL Imaging Library especially designed for document scanning like Office Lens a
 # Supporting Platforms
 Compatible .net platforms: net46 + uwp10 + dnxcore50
 
+# Nuget Package
+Install-Package Imaging.Library
+https://www.nuget.org/packages/Imaging.Library/1.0.0
+
 #Code Sample
 ```csharp
     var imaging = new ImagingManager(source);       //source is PixelMap, you can find samples how to convert image to PixelMap
@@ -48,8 +52,3 @@ Compatible .net platforms: net46 + uwp10 + dnxcore50
 |Original|Output|
 |-----------|-----------|
 |![alt source](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg)|![alt output](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg)|
-
-
-# Nuget Package
-Install-Package Imaging.Library
-https://www.nuget.org/packages/Imaging.Library/1.0.0
