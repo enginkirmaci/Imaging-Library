@@ -231,7 +231,7 @@ namespace Imaging.Library.Entities
 
         public byte Gray
         {
-            get { return (byte)((R + G + B) / 3.0); }
+            get { return (byte)((R + G + B) / 3); }
         }
 
         public uint ToUInt()

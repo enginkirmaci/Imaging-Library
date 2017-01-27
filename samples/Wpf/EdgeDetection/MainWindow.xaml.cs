@@ -159,6 +159,8 @@ namespace EdgeDetection
 
                 imaging.Render();
                 image2.Source = LoadFromPixelMap(imaging.Output);
+
+                SaveImageToFile(LoadFromPixelMap(imaging.Output), @"D:\Desktop\2.jpg");
             }
         }
 
