@@ -39,8 +39,8 @@ PCL Imaging Library especially designed for document scanning like Office Lens a
     
     //imaging.Output gives that extracted rectangle shape from photo. Check out WPF sample how to save it.
 ```
-[[https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg|alt=source]] Source
-[[https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg|alt=output]] Output
+![alt source](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg)
+[alt output](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg)
 
 
 Compatible .net platforms: net46 + uwp10 + dnxcore50
