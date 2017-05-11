@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+  <string name="LoadImage">Load Image</string>
+  <string name="ScanDocument">Scan Document</string>
+  <string name="ApplicationName">EdgeDetection</string>
+</resources>

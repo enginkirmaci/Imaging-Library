@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeDetection", "..\samples
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{75931991-493F-47C4-8205-352349F2F0A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{7D7338EA-A3F5-44C9-8BB5-8FF4342A8D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeDetection.Android", "..\samples\Xamarin\EdgeDetection.Android\EdgeDetection.Android.csproj", "{2D8602D4-5D2C-4658-9132-48D4784CA559}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,12 @@ Global
 		{6293D115-4619-4E28-9C78-7AF848526F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6293D115-4619-4E28-9C78-7AF848526F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6293D115-4619-4E28-9C78-7AF848526F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D8602D4-5D2C-4658-9132-48D4784CA559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D8602D4-5D2C-4658-9132-48D4784CA559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D8602D4-5D2C-4658-9132-48D4784CA559}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2D8602D4-5D2C-4658-9132-48D4784CA559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D8602D4-5D2C-4658-9132-48D4784CA559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D8602D4-5D2C-4658-9132-48D4784CA559}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,21 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6293D115-4619-4E28-9C78-7AF848526F91} = {75931991-493F-47C4-8205-352349F2F0A3}
 		{75931991-493F-47C4-8205-352349F2F0A3} = {2D70E54D-D083-4078-A04C-AB5C1CDBDD5E}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://enginkirmaci.visualstudio.com/
-		SccProjectUniqueName0 = Imaging.Library\\Imaging.Library.csproj
-		SccProjectName0 = Imaging.Library
-		SccAuxPath0 = https://enginkirmaci.visualstudio.com
-		SccLocalPath0 = Imaging.Library
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName1 = ..\\samples\\Wpf\\EdgeDetection\\EdgeDetection.csproj
-		SccProjectTopLevelParentUniqueName1 = Imaging.Library.sln
-		SccProjectName1 = ../samples/Wpf/EdgeDetection
-		SccAuxPath1 = https://enginkirmaci.visualstudio.com
-		SccLocalPath1 = ..\\samples\\Wpf\\EdgeDetection
-		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		{7D7338EA-A3F5-44C9-8BB5-8FF4342A8D21} = {2D70E54D-D083-4078-A04C-AB5C1CDBDD5E}
+		{2D8602D4-5D2C-4658-9132-48D4784CA559} = {7D7338EA-A3F5-44C9-8BB5-8FF4342A8D21}
 	EndGlobalSection
 EndGlobal

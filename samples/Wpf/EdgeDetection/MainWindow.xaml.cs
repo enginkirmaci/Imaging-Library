@@ -1,16 +1,17 @@
-﻿using Imaging.Library;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Imaging.Library;
 using Imaging.Library.Entities;
 using Imaging.Library.Enums;
 using Imaging.Library.Filters.BasicFilters;
 using Imaging.Library.Filters.ComplexFilters;
 using Imaging.Library.Maths;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Point = Imaging.Library.Entities.Point;
 
 namespace EdgeDetection
 {
@@ -92,7 +93,7 @@ namespace EdgeDetection
                 imaging.AddFilter(new CannyEdgeDetector());
                 imaging.Render();
 
-                var blobCounter = new BlobCounter()
+                var blobCounter = new BlobCounter
                 {
                     ObjectsOrder = ObjectsOrder.Size
                 };
@@ -100,7 +101,7 @@ namespace EdgeDetection
 
                 imaging.Render();
 
-                List<Imaging.Library.Entities.Point> corners = null;
+                List<Point> corners = null;
                 var blobs = blobCounter.GetObjectsInformation();
                 foreach (var blob in blobs)
                 {
@@ -173,17 +174,17 @@ namespace EdgeDetection
             var data = new byte[pixelMap.Height * stride];
 
             for (var i = 0; i < height; i++)
-                for (var j = 0; j < width; j++)
-                {
-                    var pixel = pixelMap[j, i];
+            for (var j = 0; j < width; j++)
+            {
+                var pixel = pixelMap[j, i];
 
-                    var idx = i * stride + j * 4;
+                var idx = i * stride + j * 4;
 
-                    data[idx] = pixel.B;
-                    data[idx + 1] = pixel.G;
-                    data[idx + 2] = pixel.R;
-                    data[idx + 3] = pixel.A;
-                }
+                data[idx] = pixel.B;
+                data[idx + 1] = pixel.G;
+                data[idx + 2] = pixel.R;
+                data[idx + 3] = pixel.A;
+            }
 
             var bitmap = BitmapSource.Create(width, height, pixelMap.DpiX, pixelMap.DpiY, PixelFormats.Bgra32, null,
                 data, stride);
@@ -223,15 +224,15 @@ namespace EdgeDetection
             var y0 = 0 / width;
             var x0 = 0 - width * y0;
             for (var y = 0; y < height; y++)
-                for (var x = 0; x < width; x++)
-                    foreach (var source in sources)
-                        source[x + x0, y + y0] = new Pixel
-                        {
-                            B = data[(y * width + x) * 4 + 0],
-                            G = data[(y * width + x) * 4 + 1],
-                            R = data[(y * width + x) * 4 + 2],
-                            A = data[(y * width + x) * 4 + 3]
-                        };
+            for (var x = 0; x < width; x++)
+                foreach (var source in sources)
+                    source[x + x0, y + y0] = new Pixel
+                    {
+                        B = data[(y * width + x) * 4 + 0],
+                        G = data[(y * width + x) * 4 + 1],
+                        R = data[(y * width + x) * 4 + 2],
+                        A = data[(y * width + x) * 4 + 3]
+                    };
         }
     }
 }
