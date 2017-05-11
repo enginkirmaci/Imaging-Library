@@ -2,11 +2,11 @@
 PCL Imaging Library especially designed for document scanning like Office Lens and Camscanner. It contains some filters to achieve this. (Canny edge detection, Blob counter, quadrilateral transformation, etc..) 
 
 # Supporting Platforms
-Compatible .net platforms: net46 + uwp10 + dnxcore50
+Compatible .net platforms: net45 + dnxcore50 + win8 + Xamarin.Android + Xamarin.iOS + Xamarin.Mac
 
 # Nuget Package
 Install-Package Imaging.Library
-https://www.nuget.org/packages/Imaging.Library/1.0.0
+https://www.nuget.org/packages/Imaging.Library
 
 #Code Sample
 ```csharp
