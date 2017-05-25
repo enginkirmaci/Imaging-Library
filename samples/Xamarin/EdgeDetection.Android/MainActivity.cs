@@ -115,25 +115,27 @@ namespace EdgeDetection.Android
             var data = new byte[pixelMap.Height * stride];
 
             for (var i = 0; i < height; i++)
-            for (var j = 0; j < width; j++)
             {
-                var pixel = pixelMap[j, i];
+                for (var j = 0; j < width; j++)
+                {
+                    var pixel = pixelMap[j, i];
 
-                var idx = i * stride + j * 4;
+                    var idx = i * stride + j * 4;
 
-                data[idx] = pixel.B;
-                data[idx + 1] = pixel.G;
-                data[idx + 2] = pixel.R;
-                data[idx + 3] = pixel.A;
+                    data[idx] = pixel.B;
+                    data[idx + 1] = pixel.G;
+                    data[idx + 2] = pixel.R;
+                    data[idx + 3] = pixel.A;
+                }
             }
 
             var buffer = ByteBuffer.Wrap(data);
             buffer.Rewind();
 
-            var image = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
-            image.CopyPixelsFromBuffer(buffer);
+            var bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+            bitmap.CopyPixelsFromBuffer(buffer);
 
-            return image;
+            return bitmap;
         }
 
         private void GetPixelMap(Uri imageUri)
@@ -148,21 +150,18 @@ namespace EdgeDetection.Android
 
             Source = new PixelMap(width, height, dpiX, dpiY, bpp);
 
-            var y0 = 0 / width;
-            var x0 = 0 - width * y0;
             for (var y = 0; y < height; y++)
             {
                 for (var x = 0; x < width; x++)
                 {
                     var pixel = bitmap.GetPixel(x, y);
-                    var values = BitConverter.GetBytes(pixel);
 
-                    Source[x + x0, y + y0] = new Pixel
+                    Source[x, y] = new Pixel
                     {
-                        B = values[0],
-                        G = values[1],
-                        R = values[2],
-                        A = values[3]
+                        R = (byte)(pixel & 0x000000FF),
+                        G = (byte)((pixel & 0x0000FF00) >> 8),
+                        B = (byte)((pixel & 0x00FF0000) >> 16),
+                        A = (byte)((pixel & 0xFF000000) >> 24)
                     };
                 }
             }

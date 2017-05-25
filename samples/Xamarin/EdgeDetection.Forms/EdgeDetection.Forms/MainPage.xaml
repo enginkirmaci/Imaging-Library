@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:EdgeDetection.Forms"
+             x:Class="EdgeDetection.Forms.MainPage">
+
+    <Label Text="Welcome to Xamarin Forms!"
+           VerticalOptions="Center"
+           HorizontalOptions="Center" />
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Load Image" Clicked="LoadImage_Clicked" />
+            <Button Text="Scan Document" Clicked="ScanDocument_Clicked" />
+        </StackLayout>
+
+        <Grid Grid.Row="1">
+            <Image x:Name="MyImage" />
+        </Grid>
+    </Grid>
+</ContentPage>
