@@ -8,7 +8,7 @@ Compatible .net platforms: net45 + dnxcore50 + win8 + Xamarin.Android + Xamarin.
 Install-Package Imaging.Library
 https://www.nuget.org/packages/Imaging.Library
 
-#Code Sample
+# Code Sample
 ```csharp
     var imaging = new ImagingManager(source);       //source is PixelMap, you can find samples how to convert image to PixelMap
     imaging.AddFilter(new BicubicFilter(scale));    //Downscaling
@@ -47,8 +47,17 @@ https://www.nuget.org/packages/Imaging.Library
     
     //imaging.Output gives that extracted rectangle shape from photo. Check out WPF sample how to save it.
 ```
-#Sample Scanning
+# Sample Scanning
 
 |Original|Output|
 |-----------|-----------|
 |![alt source](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg)|![alt output](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg)|
+
+# Sample Projects
+- WPF / EdgeDetection
+- Xamarin
+-- EdgeDetection.Android
+-- EdgeDetection.Forms
+--- EdgeDetection.Forms (Portable)
+--- EdgeDetection.Forms.Android
+--- EdgeDetection.Forms.iOS
