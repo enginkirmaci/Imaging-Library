@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Android.Graphics;
 using CoreGraphics;
-using Foundation;
 using Imaging.Library;
 using Imaging.Library.Entities;
 using Imaging.Library.Enums;
@@ -78,15 +77,39 @@ namespace EdgeDetection.Forms
 
             imaging.Render();
 
-            if (Device.RuntimePlatform == Device.Android)
+            MyImage.Source = LoadFromPixel(imaging.Output);
+        }
+
+        private void GetPixelMapAndroid(MediaFile file)
+        {
+            var decoder = BitmapRegionDecoder.NewInstance(file.GetStream(), false);
+            var bitmap = decoder.DecodeRegion(new Rect(0, 0, decoder.Width, decoder.Height), null);
+
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+            var bpp = bitmap.RowBytes / bitmap.Width;
+            var dpiX = 1;
+            var dpiY = 1;
+
+            Source = new PixelMap(width, height, dpiX, dpiY, bpp);
+
+            for (var y = 0; y < height; y++)
             {
-                MyImage.Source = LoadFromPixelMapAndroid(imaging.Output);
+                for (var x = 0; x < width; x++)
+                {
+                    var pixel = bitmap.GetPixel(x, y);
+
+                    Source[x, y] = new Pixel
+                    {
+                        R = (byte)(pixel & 0x000000FF),
+                        G = (byte)((pixel & 0x0000FF00) >> 8),
+                        B = (byte)((pixel & 0x00FF0000) >> 16),
+                        A = (byte)((pixel & 0xFF000000) >> 24)
+                    };
+                }
             }
 
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                MyImage.Source = LoadFromPixelMapiOS(imaging.Output);
-            }
+            decoder.Recycle();
         }
 
         private ImageSource LoadFromPixelMapAndroid(PixelMap pixelMap)
@@ -123,38 +146,6 @@ namespace EdgeDetection.Forms
             return ImageSource.FromStream(() => ms);
         }
 
-        private void GetPixelMapAndroid(MediaFile file)
-        {
-            var decoder = BitmapRegionDecoder.NewInstance(file.GetStream(), false);
-            var bitmap = decoder.DecodeRegion(new Rect(0, 0, decoder.Width, decoder.Height), null);
-
-            var width = bitmap.Width;
-            var height = bitmap.Height;
-            var bpp = bitmap.RowBytes / bitmap.Width;
-            var dpiX = 1;
-            var dpiY = 1;
-
-            Source = new PixelMap(width, height, dpiX, dpiY, bpp);
-
-            for (var y = 0; y < height; y++)
-            {
-                for (var x = 0; x < width; x++)
-                {
-                    var pixel = bitmap.GetPixel(x, y);
-
-                    Source[x, y] = new Pixel
-                    {
-                        R = (byte)(pixel & 0x000000FF),
-                        G = (byte)((pixel & 0x0000FF00) >> 8),
-                        B = (byte)((pixel & 0x00FF0000) >> 16),
-                        A = (byte)((pixel & 0xFF000000) >> 24)
-                    };
-                }
-            }
-
-            decoder.Recycle();
-        }
-
         private void GetPixelMapiOS(MediaFile file)
         {
             var image = UIImage.FromFile(file.Path);
@@ -164,17 +155,28 @@ namespace EdgeDetection.Forms
             var bytesPerPixel = 4;
             var bytesPerRow = bytesPerPixel * width;
             var bitsPerComponent = 8;
+            var dpiX = 1;
+            var dpiY = 1;
 
             var rawData = new byte[bytesPerRow * height];
 
             using (var colorSpace = CGColorSpace.CreateDeviceRGB())
             {
                 //Crashes on the next line with an invalid handle exception
-                using (var context = new CGBitmapContext(rawData, width, height, bitsPerComponent, bytesPerRow, colorSpace, CGBitmapFlags.ByteOrder32Big | CGBitmapFlags.PremultipliedLast))
+                using (var context = new CGBitmapContext(
+                    rawData,
+                    width,
+                    height,
+                    bitsPerComponent,
+                    bytesPerRow,
+                    colorSpace,
+                    CGBitmapFlags.ByteOrder32Big | CGBitmapFlags.PremultipliedLast))
                 {
                     context.DrawImage(new CGRect(0, 0, width, height), image.CGImage);
                 }
             }
+
+            Source = new PixelMap(width, height, dpiX, dpiY, bytesPerPixel);
 
             for (var x = 0; x < width; x++)
             {
@@ -184,9 +186,9 @@ namespace EdgeDetection.Forms
 
                     Source[x, y] = new Pixel
                     {
-                        R = rawData[index],
+                        B = rawData[index],
                         G = rawData[index + 1],
-                        B = rawData[index + 2],
+                        R = rawData[index + 2],
                         A = rawData[index + 3]
                     };
                 }
@@ -199,7 +201,7 @@ namespace EdgeDetection.Forms
             var height = pixelMap.Height;
             var stride = width * 4;
 
-            var data = new byte[pixelMap.Height * stride];
+            var rawData = new byte[pixelMap.Height * stride];
 
             for (var i = 0; i < height; i++)
             {
@@ -209,24 +211,45 @@ namespace EdgeDetection.Forms
 
                     var idx = i * stride + j * 4;
 
-                    data[idx] = pixel.B;
-                    data[idx + 1] = pixel.G;
-                    data[idx + 2] = pixel.R;
-                    data[idx + 3] = pixel.A;
+                    rawData[idx] = pixel.B;
+                    rawData[idx + 1] = pixel.G;
+                    rawData[idx + 2] = pixel.R;
+                    rawData[idx + 3] = pixel.A;
                 }
             }
 
-            var bitmap = NSData.FromArray(data);
-            //var uiimage = UIImage.LoadFromData(bitmap);
+            var bitsPerComponant = 8;
+            var bitsPerPixel = 32;
+            var bytesPerRow = 4 * pixelMap.Width;
 
-            return ImageSource.FromStream(() => bitmap.AsStream());
+            using (var _provider = new CGDataProvider(rawData, 0, rawData.Length))
+            {
+                using (var colorSpace = CGColorSpace.CreateDeviceRGB())
+                {
+                    var cg = new CGImage(
+                        pixelMap.Width,
+                        pixelMap.Height,
+                        bitsPerComponant,
+                        bitsPerPixel,
+                        bytesPerRow,
+                        colorSpace,
+                        CGBitmapFlags.ByteOrderDefault,
+                        _provider,
+                        null,
+                        true,
+                        CGColorRenderingIntent.Default
+                    );
+
+                    return ImageSource.FromStream(() => UIImage.FromImage(cg).AsPNG().AsStream());
+                }
+            }
         }
 
         private async void GetPixelMapFromGallery()
         {
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {
-                DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
                 return;
             }
             var file = await CrossMedia.Current.PickPhotoAsync();
@@ -234,16 +257,32 @@ namespace EdgeDetection.Forms
             if (file == null)
                 return;
 
-            if (Device.RuntimePlatform == Device.Android)
+            switch (Device.RuntimePlatform)
             {
-                GetPixelMapAndroid(file);
-                MyImage.Source = LoadFromPixelMapAndroid(Source);
+                case Device.Android:
+                    GetPixelMapAndroid(file);
+                    break;
+
+                case Device.iOS:
+                    GetPixelMapiOS(file);
+                    break;
             }
 
-            if (Device.RuntimePlatform == Device.iOS)
+            MyImage.Source = LoadFromPixel(Source);
+        }
+
+        private ImageSource LoadFromPixel(PixelMap pixelMap)
+        {
+            switch (Device.RuntimePlatform)
             {
-                GetPixelMapiOS(file);
-                MyImage.Source = LoadFromPixelMapiOS(Source);
+                case Device.Android:
+                    return LoadFromPixelMapAndroid(Source);
+
+                case Device.iOS:
+                    return LoadFromPixelMapiOS(Source);
+
+                default:
+                    return null;
             }
         }
     }
