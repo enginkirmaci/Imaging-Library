@@ -250,3 +250,4 @@ paket-files/
 *.sln.iml
 /nuget/Imaging.Library.1.0.0.nupkg
 /nuget/Imaging.Library.1.1.0.nupkg
+/nuget/Imaging.Library.1.1.1.nupkg

@@ -167,39 +167,17 @@ namespace EdgeDetection
 
         private BitmapSource LoadFromPixelMap(PixelMap pixelMap)
         {
-            var width = pixelMap.Width;
-            var height = pixelMap.Height;
-            var stride = width * 4;
-
-            var data = new byte[pixelMap.Height * stride];
-
-            for (var i = 0; i < height; i++)
-                for (var j = 0; j < width; j++)
-                {
-                    var pixel = pixelMap[j, i];
-
-                    var idx = i * stride + j * 4;
-
-                    data[idx] = pixel.B;
-                    data[idx + 1] = pixel.G;
-                    data[idx + 2] = pixel.R;
-                    data[idx + 3] = pixel.A;
-                }
-
-            var bitmap = BitmapSource.Create(width, height, pixelMap.DpiX, pixelMap.DpiY, PixelFormats.Bgra32, null,
-                data, stride);
+            var bitmap = BitmapSource.Create(
+                pixelMap.Width,
+                pixelMap.Height,
+                pixelMap.DpiX,
+                pixelMap.DpiY,
+                PixelFormats.Bgra32,
+                null,
+                pixelMap.ToByteArray(),
+                pixelMap.Width * 4);
 
             return bitmap;
-        }
-
-        private void SaveImageToFile(BitmapSource image, string filePath)
-        {
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                encoder.Save(fileStream);
-            }
         }
 
         private void GetPixelMap(string path, PixelMap[] sources)
@@ -228,12 +206,22 @@ namespace EdgeDetection
                     foreach (var source in sources)
                         source[x, y] = new Pixel
                         {
-                            B = data[(y * width + x) * 4 + 0],
+                            R = data[(y * width + x) * 4 + 0],
                             G = data[(y * width + x) * 4 + 1],
-                            R = data[(y * width + x) * 4 + 2],
+                            B = data[(y * width + x) * 4 + 2],
                             A = data[(y * width + x) * 4 + 3]
                         };
                 }
+            }
+        }
+
+        private void SaveImageToFile(BitmapSource image, string filePath)
+        {
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                encoder.Save(fileStream);
             }
         }
     }

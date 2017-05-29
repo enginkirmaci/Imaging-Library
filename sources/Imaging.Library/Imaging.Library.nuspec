@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>Imaging.Library</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <title>PCL Imaging Library for Document Scanning</title>
     <authors>Engin KIRMACI</authors>
     <owners>Engin KIRMACI</owners>
@@ -13,7 +13,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       PCL Imaging Library for Document Scanning, contains Canny edge detection, Blob counter, quadrilateral transformation and many more.
-      Check samples in github.
+      Check samples in github how to convert from/to pixel map to iOS or Android.
       This package is compatible with the following .net platforms: net45+dnxcore50+win8+Xamarin.Android+Xamarin.iOS+Xamarin.Mac
     </description>
     <releaseNotes>Initial release</releaseNotes>

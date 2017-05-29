@@ -108,31 +108,10 @@ namespace EdgeDetection.Android
 
         private Bitmap LoadFromPixelMap(PixelMap pixelMap)
         {
-            var width = pixelMap.Width;
-            var height = pixelMap.Height;
-            var stride = width * 4;
-
-            var data = new byte[pixelMap.Height * stride];
-
-            for (var i = 0; i < height; i++)
-            {
-                for (var j = 0; j < width; j++)
-                {
-                    var pixel = pixelMap[j, i];
-
-                    var idx = i * stride + j * 4;
-
-                    data[idx] = pixel.B;
-                    data[idx + 1] = pixel.G;
-                    data[idx + 2] = pixel.R;
-                    data[idx + 3] = pixel.A;
-                }
-            }
-
-            var buffer = ByteBuffer.Wrap(data);
+            var buffer = ByteBuffer.Wrap(pixelMap.ToByteArray());
             buffer.Rewind();
 
-            var bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
+            var bitmap = Bitmap.CreateBitmap(pixelMap.Width, pixelMap.Height, Bitmap.Config.Argb8888);
             bitmap.CopyPixelsFromBuffer(buffer);
 
             return bitmap;
@@ -158,9 +137,9 @@ namespace EdgeDetection.Android
 
                     Source[x, y] = new Pixel
                     {
-                        R = (byte)(pixel & 0x000000FF),
+                        B = (byte)(pixel & 0x000000FF),
                         G = (byte)((pixel & 0x0000FF00) >> 8),
-                        B = (byte)((pixel & 0x00FF0000) >> 16),
+                        R = (byte)((pixel & 0x00FF0000) >> 16),
                         A = (byte)((pixel & 0xFF000000) >> 24)
                     };
                 }

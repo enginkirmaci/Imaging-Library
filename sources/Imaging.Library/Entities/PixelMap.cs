@@ -4,7 +4,8 @@ namespace Imaging.Library.Entities
 {
     public class PixelMap
     {
-        public readonly int Bpp;
+        public readonly int BitsPerComponent;
+        public readonly int BytesPerPixel;
 
         public readonly double DpiX;
         public readonly double DpiY;
@@ -24,7 +25,7 @@ namespace Imaging.Library.Entities
         /// <summary>
         ///     Creates a blank PixelMap of desired width and height.
         /// </summary>
-        public PixelMap(int width, int height, double dpiX, double dpiY, int bpp)
+        public PixelMap(int width, int height, double dpiX = 1, double dpiY = 1, int bytesPerPixel = 4, int bitsPerComponent = 8)
         {
             Width = width;
             Height = height;
@@ -32,10 +33,11 @@ namespace Imaging.Library.Entities
             DpiY = dpiY;
             Map = new Pixel[Height][];
 
-            for (int i = 0; i < Height; i++)
+            for (var i = 0; i < Height; i++)
                 Map[i] = new Pixel[Width];
 
-            Bpp = bpp;
+            BytesPerPixel = bytesPerPixel;
+            BitsPerComponent = bitsPerComponent;
         }
 
         /// <summary>
@@ -49,35 +51,13 @@ namespace Imaging.Library.Entities
             DpiY = original.DpiY;
             Map = new Pixel[Height][];
 
-            for (int i = 0; i < Height; i++)
+            for (var i = 0; i < Height; i++)
                 Map[i] = new Pixel[Width];
 
-            Bpp = original.Bpp;
-
-            //Array.Copy(original.Map, Map, original.Map.Length);
+            BytesPerPixel = original.BytesPerPixel;
+            BitsPerComponent = original.BitsPerComponent;
 
             Map = CopyArrayBuiltIn(original.Map);
-
-            //for (var x = 0; x < Width; x++)
-            //    for (var y = 0; y < Height; y++)
-            //        this[x, y] = original[x, y];
-        }
-
-        private static Pixel[][] CopyArrayBuiltIn(Pixel[][] source)
-        {
-            var len = source.Length;
-            var dest = new Pixel[len][];
-
-            for (var x = 0; x < len; x++)
-            {
-                var inner = source[x];
-                var ilen = inner.Length;
-                var newer = new Pixel[ilen];
-                Array.Copy(inner, newer, ilen);
-                dest[x] = newer;
-            }
-
-            return dest;
         }
 
         /// <summary>
@@ -85,14 +65,8 @@ namespace Imaging.Library.Entities
         /// </summary>
         public Pixel this[int x, int y]
         {
-            get
-            {
-                return Map[y][x];
-            }
-            set
-            {
-                Map[y][x] = value;
-            }
+            get { return Map[y][x]; }
+            set { Map[y][x] = value; }
         }
 
         /// <summary>
@@ -113,12 +87,55 @@ namespace Imaging.Library.Entities
             set { this[i / Height, i % Height] = value; }
         }
 
+        private static Pixel[][] CopyArrayBuiltIn(Pixel[][] source)
+        {
+            var len = source.Length;
+            var dest = new Pixel[len][];
+
+            for (var x = 0; x < len; x++)
+            {
+                var inner = source[x];
+                var ilen = inner.Length;
+                var newer = new Pixel[ilen];
+                Array.Copy(inner, newer, ilen);
+                dest[x] = newer;
+            }
+
+            return dest;
+        }
+
         /// <summary>
         ///     Determine if a point is within this PixelMap.
         /// </summary>
         public bool Inside(Point p)
         {
             return p.X >= 0 && p.Y >= 0 && p.X < Width && p.Y < Height;
+        }
+
+        public byte[] ToByteArray()
+        {
+            var width = Width;
+            var height = Height;
+            var stride = width * 4;
+
+            var rawData = new byte[Height * stride];
+
+            for (var i = 0; i < height; i++)
+            {
+                for (var j = 0; j < width; j++)
+                {
+                    var pixel = this[j, i];
+
+                    var idx = i * stride + j * 4;
+
+                    rawData[idx] = pixel.R;
+                    rawData[idx + 1] = pixel.G;
+                    rawData[idx + 2] = pixel.B;
+                    rawData[idx + 3] = pixel.A;
+                }
+            }
+
+            return rawData;
         }
     }
 }
