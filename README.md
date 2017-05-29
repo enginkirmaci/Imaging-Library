@@ -54,10 +54,13 @@ https://www.nuget.org/packages/Imaging.Library
 |![alt source](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/1.jpg)|![alt output](https://github.com/enginkirmaci/Imaging-Library/blob/master/images/2.jpg)|
 
 # Sample Projects
-- WPF / EdgeDetection
-- Xamarin
--- EdgeDetection.Android
--- EdgeDetection.Forms
---- EdgeDetection.Forms (Portable)
---- EdgeDetection.Forms.Android
---- EdgeDetection.Forms.iOS
+* WPF
+    * EdgeDetection
+* Xamarin
+    * EdgeDetection.Android
+    * EdgeDetection.Forms
+        * EdgeDetection.Forms (Portable)
+        * EdgeDetection.Forms.Android
+        * EdgeDetection.Forms.iOS
+
+Note: You can find **AndroidHelper.cs** and **iOSHelper.cs** in **EdgeDetection.Forms (Portable)** which are convert platform specific **bitmap** from/to **PixelMap**.
